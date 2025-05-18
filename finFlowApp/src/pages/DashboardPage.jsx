@@ -24,6 +24,13 @@ const DashboardPage = () => {
     return <p className="text-center mt-10 text-gray-600">Cargando datos del dashboard...</p>;
   }
 
+  // Transformar datos para el gráfico
+  const timelineData = Object.entries(data.timeline).map(([date, value]) => ({
+    category: date,
+    income: value.income,
+    expense: value.expense,
+  }));
+
   return (
     <div className="min-h-screen bg-[#f4f5f7] p-6 space-y-8">
       {/* Header */}
@@ -42,7 +49,7 @@ const DashboardPage = () => {
         <DateFilter />
       </div>
 
-      {/* Resumen de tarjetas */}
+      {/* Resumen */}
       <div>
         <h2 className="text-2xl font-semibold text-gray-700 mb-4">Resumen</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -68,7 +75,7 @@ const DashboardPage = () => {
       <div>
         <h2 className="text-2xl font-semibold text-gray-700 mb-4">Estadísticas</h2>
         <div className="bg-white p-4 rounded-xl shadow-md">
-          <StatsChart data={data.timeline} />
+          <StatsChart data={timelineData} />
         </div>
       </div>
 
@@ -76,7 +83,6 @@ const DashboardPage = () => {
       <div>
         <h2 className="text-2xl font-semibold text-gray-700 mb-4">Transacciones recientes</h2>
         <RecentTransactions transactions={data.transactions.slice(0, 5)} />
-        {/* Puedes agregar un botón "Ver todas" aquí si deseas paginación */}
       </div>
     </div>
   );
